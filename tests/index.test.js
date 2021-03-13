@@ -11,9 +11,11 @@ beforeEach(function (done) {
   }, 200);
 });
 
+const topic = faker.random.word();
+
 describe("Publisher Server endpoints is working", () => {
   it("Subscriber can subscribe", async () => {
-    const topic = faker.random.word();
+    // const topic = faker.random.word();
     const url = "http://localhost:9000/test1";
     const response = await request(pubapp).post(`/subscribe/${topic}`).send({
       url,
@@ -25,7 +27,6 @@ describe("Publisher Server endpoints is working", () => {
   });
 
   it("Can send http requests to all subscribers", async () => {
-    const topic = faker.random.word();
     const response = await request(pubapp)
       .post(`/publish/${topic}`)
       .send({
@@ -37,5 +38,21 @@ describe("Publisher Server endpoints is working", () => {
     const payloads = Payload.findAll({});
     expect(response.status).to.be.equal(200);
     expect(payloads.length).to.be.greaterThan(0);
+  });
+});
+
+describe("Subsciber Server endpoints is working", () => {
+  it("Subscriber can receive data and return success status", async () => {
+    const response = await request(subapp).post(`/${topic}`).send({
+      topic,
+      data: {},
+    });
+
+    expect(response.status).to.be.equal(200);
+  });
+
+  it("Subscriber returns invalid request", async () => {
+    const response = await request(subapp).post(`/${topic}`).send({});
+    expect(response.status).to.be.equal(400);
   });
 });
