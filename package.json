@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/niyiojeyinka/pangaeatest#readme",
   "dependencies": {
+    "bee-queue": "^1.2.3",
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

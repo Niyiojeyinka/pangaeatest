@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const Subscription = sequelize.define("Subscription", {
     url: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     topic: {
-      type: Sequelize.DECIMAL(10, 2),
+      type: Sequelize.STRING,
       allowNull: false,
     },
   });

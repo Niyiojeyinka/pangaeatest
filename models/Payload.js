@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const Payload = sequelize.define("Payload", {
     data: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     topic: {
-      type: Sequelize.DECIMAL(10, 2),
+      type: Sequelize.STRING,
       allowNull: false,
     },
   });

@@ -4,7 +4,7 @@ const app = express();
 const publisher = require("./routes/publisher");
 const path = require("path");
 const cors = require("cors");
-require("dotenv").config(); //process.env.DB_HOST
+require("dotenv").config();
 const db = require("./models");
 
 db.sequelize.sync({ force: false }).then(() => {
