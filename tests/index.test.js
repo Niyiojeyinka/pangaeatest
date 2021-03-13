@@ -5,18 +5,11 @@ const pubapp = require("../publisher");
 const subapp = require("../subscriber");
 const faker = require("faker");
 
-beforeEach(function (done) {
-  setTimeout(function () {
-    done();
-  }, 200);
-});
-
 const topic = faker.random.word();
 
 describe("Publisher Server endpoints is working", () => {
   it("Subscriber can subscribe", async () => {
-    // const topic = faker.random.word();
-    const url = "http://localhost:9000/test1";
+    const url = `http://localhost:9000/${topic}`;
     const response = await request(pubapp).post(`/subscribe/${topic}`).send({
       url,
     });
@@ -27,15 +20,11 @@ describe("Publisher Server endpoints is working", () => {
   });
 
   it("Can send http requests to all subscribers", async () => {
-    const response = await request(pubapp)
-      .post(`/publish/${topic}`)
-      .send({
-        data: {
-          message: faker.random.words,
-        },
-      });
+    const response = await request(pubapp).post(`/publish/${topic}`).send({
+      message: faker.random.words,
+    });
 
-    const payloads = Payload.findAll({});
+    const payloads = await Payload.findAll({});
     expect(response.status).to.be.equal(200);
     expect(payloads.length).to.be.greaterThan(0);
   });
